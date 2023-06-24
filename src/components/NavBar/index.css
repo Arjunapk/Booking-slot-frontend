@@ -1,0 +1,30 @@
+.nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 30px;
+}
+
+.nav-bar-logo {
+    width: 100px;
+}
+
+.nav-bar-link-card {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0 20px;
+}
+
+.nav-bar-link-item {
+    margin: 0 0 0 30px;
+}
+
+.nav-bar-link {
+    color: #262626;
+    font-size: 20px;
+    font-family: Roboto;
+    font-weight: 500;
+    text-decoration: none;
+}
