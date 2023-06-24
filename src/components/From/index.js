@@ -1,4 +1,5 @@
 import { Component } from "react"
+import { v4 as uuid } from 'uuid';
 import BookingSlotDetailsContext from "../../context/BookingSlotDetailsContext"
 import NavBar from "../NavBar"
 import './index.css'
@@ -24,9 +25,26 @@ class Form extends Component {
       this.setState({time: event.target.value}, () => console.log(this.state))
     }
 
-    onSubmitForm = event => {
-      event.preventDefault()
-      console.log(this.state)
+    onSubmitFormDetails = async date => {
+      console.log('start')
+      const {name, mobileNumber, email, time} = this.state
+      const id = uuid()
+      const activeDate = '25/06/2023'
+      const userDetails = {id, name, mobileNumber, email, date: activeDate, time}
+      console.log(userDetails)
+      console.log(1, JSON.stringify(userDetails))
+      const url = "https://booking-slot.onrender.com/booking-slot/create"
+      console.log(JSON.stringify(userDetails))
+      const options = {
+        method: "POST",
+        body: JSON.stringify(userDetails)
+      }
+      console.log(2, JSON.stringify(userDetails))
+      const response = await fetch(url, options)
+      console.log(3, JSON.stringify(userDetails))
+      const data = await response.json()
+      console.log(data)
+      console.log('start')
     }
 
     render() {
@@ -38,13 +56,19 @@ class Form extends Component {
               const {activeDate} = value
               const stringDate = activeDate.toLocaleDateString('en-US', {dateStyle: 'full'})
 
+              const onSubmitForm = event => {
+                event.preventDefault()
+                console.log('starting')
+                this.onSubmitFormDetails(activeDate)
+              }
+
               return (
                 <>
                   <NavBar />
                   <div className="container">
                     <div className="row">
                       <div className="col-12">
-                        <form className="user-details-form" onSubmit={this.onSubmitForm}>
+                        <form className="user-details-form" onSubmit={onSubmitForm}>
                           <h1 className="user-details-heading">User Details</h1>
                           <label className="user-details-label" htmlFor="name">Name</label>
                           <input required className="user-details-input form-control" id="name" type='text' value={name} onChange={this.onChangeName} placeholder="Name" />
