@@ -1,7 +1,10 @@
 import React from 'react'
 
 const BookingSlotDetailsContext = React.createContext({
-    bookingList: [], activeDate: new Date(),
+    bookingList: [],
+    addBookingSlot: () => {},
+    activeDate: new Date(),
+    onChangeActiveDate: () => {},
 })
 
 export default BookingSlotDetailsContext

@@ -1,6 +1,8 @@
 import {Component} from 'react'
 import {Routes, Route} from 'react-router-dom'
+import { ToastContainer } from 'react-toastify';
 import Home from './components/Home';
+import BookSlot from './components/BookSlot'
 import Form from './components/From';
 import BookingSlotDetailsContext from './context/BookingSlotDetailsContext'
 import './App.css';
@@ -25,7 +27,7 @@ class App extends Component {
         date: each.date,
         time: each.time,
       }))
-      this.setState({bookingList: updatedData}, () => console.log(this.state))
+      this.setState({bookingList: updatedData})
     }
   }
 
@@ -33,15 +35,32 @@ class App extends Component {
     this.setState({activeDate: value})
   }
 
+  addBookingSlot = newBookingSlot => {
+    this.setState(prevState => ({bookingList: [...prevState.bookingList, newBookingSlot]}), () => console.log(this.state.bookingList))
+  }
+
   render() {
     const {bookingList, activeDate} = this.state
 
     return (
-      <BookingSlotDetailsContext.Provider value={{bookingList, activeDate, onChangeActiveDate: this.onChangeActiveDate}}>
+      <BookingSlotDetailsContext.Provider value={{bookingList, addBookingSlot: this.addBookingSlot, activeDate, onChangeActiveDate: this.onChangeActiveDate}}>
         <Routes>
-          <Route exact path='/' Component={Home} />
-          <Route exact path='/book-slot' Component={Form} />
+          <Route exact path='/' element={<Home />} />
+          <Route exact path='/book-slot' element={<BookSlot />} />
+          <Route exact path='/book-slot/user-details' element={<Form />} />
         </Routes>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </BookingSlotDetailsContext.Provider>
     )
   }

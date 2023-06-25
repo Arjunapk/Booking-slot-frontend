@@ -1,99 +1,117 @@
-import { Component } from "react"
+import { useState } from "react"
 import { v4 as uuid } from 'uuid';
+import { useNavigate } from "react-router-dom";
+import {toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 import BookingSlotDetailsContext from "../../context/BookingSlotDetailsContext"
 import NavBar from "../NavBar"
 import './index.css'
 
-const bookTimeSlots = ["10:00 - 11:00", "11:15 - 12:15", "12:30 - 01:30", "02:30 - 03:30", "03.45 - 04:45", "05:00 - 06:00"]
+const bookTimeSlot = ["10:00 - 11:00", "11:15 - 12:15", "12:30 - 01:30", "02:30 - 03:30", "03.45 - 04:45", "05:00 - 06:00"]
 
-class Form extends Component {
-    state = {name: '', mobileNumber: '', email: '', time: bookTimeSlots[0]}
+function Form() {
+  const [name, changeName] = useState('')
+  const [mobileNumber, changeMobileNumber] = useState('')
+  const [email, changeEmail] = useState('')
+  let [time, changeTime] = useState('')
+  const navigate = useNavigate()
 
-    onChangeName = event => {
-      this.setState({name: event.target.value})
+  let bookTimeSlots = bookTimeSlot
+
+  const onChangeName = event => {
+    changeName(event.target.value)
+  }
+
+  const onChangeMobileNumber = event => {
+      changeMobileNumber(event.target.value)
+  }
+  const onChangeEmail = event => {
+      changeEmail(event.target.value)
+  }
+
+  const onChangeTime = event => {
+      changeTime(event.target.value)
+  }
+
+  const onSubmitUserDetails = (date, addBookingSlot, bookingList) => {
+    if (time === '') {
+      time = bookTimeSlots[0]
     }
+    const userDetails = {id: uuid(), name, mobileNumber, email, date, time}
+    addBookingSlot(userDetails)
+    toast.success('Book slot successfully!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+      navigate('/')
+  }
 
-    onChangeMobileNumber = event => {
-      this.setState({mobileNumber: event.target.value})
-    }
+  return (
+    <BookingSlotDetailsContext.Consumer>
+      {value => {
+        const {activeDate, addBookingSlot, bookingList} = value
+        const stringDate = activeDate.toLocaleDateString('en-US', {dateStyle: 'full'})
 
-    onChangeEmail = event => {
-      this.setState({email: event.target.value})
-    }
+        const onSubmitForm = event => {
+          event.preventDefault()
+          onSubmitUserDetails(stringDate, addBookingSlot, bookingList)
+        }
 
-    onChangeTime = event => {
-      this.setState({time: event.target.value}, () => console.log(this.state))
-    }
+        const activeDateBookingList = bookingList.filter(each => each.date === stringDate)
+        bookTimeSlots = bookTimeSlots.filter(each => !activeDateBookingList.some(list => list.time === each ))
 
-    onSubmitFormDetails = async date => {
-      console.log('start')
-      const {name, mobileNumber, email, time} = this.state
-      const id = uuid()
-      const activeDate = '25/06/2023'
-      const userDetails = {id, name, mobileNumber, email, date: activeDate, time}
-      console.log(userDetails)
-      console.log(1, JSON.stringify(userDetails))
-      const url = "https://booking-slot.onrender.com/booking-slot/create"
-      console.log(JSON.stringify(userDetails))
-      const options = {
-        method: "POST",
-        body: JSON.stringify(userDetails)
-      }
-      console.log(2, JSON.stringify(userDetails))
-      const response = await fetch(url, options)
-      console.log(3, JSON.stringify(userDetails))
-      const data = await response.json()
-      console.log(data)
-      console.log('start')
-    }
+        if (bookTimeSlots.length === 0) {
+          toast.success('Slot is not available choose other day', {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
+          navigate('/book-slot')
+        }
 
-    render() {
-        const {name, mobileNumber, email} = this.state
-
-        return (
-          <BookingSlotDetailsContext.Consumer>
-            {value => {
-              const {activeDate} = value
-              const stringDate = activeDate.toLocaleDateString('en-US', {dateStyle: 'full'})
-
-              const onSubmitForm = event => {
-                event.preventDefault()
-                console.log('starting')
-                this.onSubmitFormDetails(activeDate)
-              }
-
-              return (
-                <>
-                  <NavBar />
-                  <div className="container">
-                    <div className="row">
-                      <div className="col-12">
-                        <form className="user-details-form" onSubmit={onSubmitForm}>
-                          <h1 className="user-details-heading">User Details</h1>
-                          <label className="user-details-label" htmlFor="name">Name</label>
-                          <input required className="user-details-input form-control" id="name" type='text' value={name} onChange={this.onChangeName} placeholder="Name" />
-                          <label className="user-details-label" htmlFor="mobileNumber">Mobile number</label>
-                          <input required className="user-details-input form-control" id="mobileNumber" type='number' value={mobileNumber} onChange={this.onChangeMobileNumber} placeholder="Mobile Number" />
-                          <label className="user-details-label" htmlFor="email">Email</label>
-                          <input required className="user-details-input form-control" id="email" type='email' value={email} onChange={this.onChangeEmail} placeholder="Email" />
-                          <label className="user-details-label" htmlFor="time">Slot Time</label>
-                          <select className="user-details-input form-control" onChange={this.onChangeTime}>
-                            {bookTimeSlots.map(each => (
-                              <option key={each} value={each}>{each}</option>
-                            ))}
-                          </select>
-                          <p className="user-details-date">Date : {stringDate}</p>
-                          <button type="submit" className="user-details-button btn btn-primary">Book Slot</button>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </>
-            )
-            }}
-          </BookingSlotDetailsContext.Consumer>
+        return  (
+          <>
+            <NavBar />
+            <div className="container">
+              <div className="row">
+                <div className="col-12">
+                  <form className="user-details-form" onSubmit={onSubmitForm}>
+                    <h1 className="user-details-heading">User Details</h1>
+                    <label className="user-details-label" htmlFor="name">Name</label>
+                    <input required className="user-details-input form-control" id="name" type='text' value={name} onChange={onChangeName} placeholder="Name" />
+                    <label className="user-details-label" htmlFor="mobileNumber">Mobile number</label>
+                    <input required className="user-details-input form-control" id="mobileNumber" type='number' value={mobileNumber} onChange={onChangeMobileNumber} placeholder="Mobile Number" />
+                    <label className="user-details-label" htmlFor="email">Email</label>
+                    <input required className="user-details-input form-control" id="email" type='email' value={email} onChange={onChangeEmail} placeholder="Email" />
+                    <label className="user-details-label" htmlFor="time">Slot Time</label>
+                    <select className="user-details-input form-control" onChange={onChangeTime}>
+                      {bookTimeSlots.map(each => (
+                        <option key={each} value={each}>{each}</option>
+                      ))}
+                    </select>
+                    <p className="user-details-date">Date : {stringDate}</p>
+                    <button type="submit" className="user-details-button btn btn-primary">Book Slot</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </>
         )
-    }
+      }}
+    </BookingSlotDetailsContext.Consumer>
+  )
+
 }
 
 export default Form
