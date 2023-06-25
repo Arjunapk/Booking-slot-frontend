@@ -3,10 +3,24 @@
     align-items: center;
     justify-content: space-between;
     padding: 10px 30px;
+    background-color: #e6eaf5;
+}
+
+.nav-logo-card {
+    display: flex;
+    align-items: center;
+}
+
+.nav-bar-website {
+    font-size: 25px;
+    font-family: Roboto;
+    font-weight: bold;
+    color: #025beb;
+    margin: 0 10px;
 }
 
 .nav-bar-logo {
-    width: 100px;
+    width: 50px;
 }
 
 .nav-bar-link-card {
@@ -25,6 +39,10 @@
     color: #262626;
     font-size: 20px;
     font-family: Roboto;
-    font-weight: 500;
+    font-weight: bold;
     text-decoration: none;
+}
+
+.active {
+    color: #1953ff;
 }

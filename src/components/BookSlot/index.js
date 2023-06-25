@@ -45,8 +45,8 @@ const BookSlot = props => {
               <div className='container'>
                 <div className='row'>
                   <div className='col-12'>
-                    <div className='home-container'>
-                      <h1 className='home-heading'>Select Date and Book Slot</h1>
+                    <div className='book-slot-container'>
+                      <h1 className='book-slot-heading'>Select Date and Book Slot</h1>
                       <Calendar value={date} onChange={onChangeActive} minDate={new Date()} maxDate={new Date(2023, 7, 23)} onClickDay={onClickDay} />
                     </div>
                   </div>

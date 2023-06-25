@@ -1,0 +1,21 @@
+.book-slot-history-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    min-height: 90vh;
+}
+
+.history-image {
+    width: 30%;
+    margin: 0 0 40px 0;
+}
+
+.history-description {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: Roboto;
+    color: #262626;
+    margin: 0 0 15px 0;
+}

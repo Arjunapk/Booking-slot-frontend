@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import Home from './components/Home';
 import BookSlot from './components/BookSlot'
 import Form from './components/From';
+import BookSlotHistory from './components/BookSlotHistory';
 import BookingSlotDetailsContext from './context/BookingSlotDetailsContext'
 import './App.css';
 
@@ -48,6 +49,7 @@ class App extends Component {
           <Route exact path='/' element={<Home />} />
           <Route exact path='/book-slot' element={<BookSlot />} />
           <Route exact path='/book-slot/user-details' element={<Form />} />
+          <Route exact path='/book-slot/history' element={<BookSlotHistory />} />
         </Routes>
         <ToastContainer
           position="top-center"
