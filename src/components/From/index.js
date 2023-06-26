@@ -1,7 +1,8 @@
 import { useState } from "react"
 import { v4 as uuid } from 'uuid';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, redirect } from "react-router-dom";
 import {toast} from 'react-toastify'
+import {format} from 'date-fns'
 import 'react-toastify/dist/ReactToastify.css';
 import BookingSlotDetailsContext from "../../context/BookingSlotDetailsContext"
 import NavBar from "../NavBar"
@@ -33,7 +34,7 @@ function Form() {
       changeTime(event.target.value)
   }
 
-  const onSubmitUserDetails = (date, addBookingSlot, bookingList) => {
+  const onSubmitUserDetails = (date, addBookingSlot) => {
     if (time === '') {
       time = bookTimeSlots[0]
     }
@@ -56,7 +57,7 @@ function Form() {
     <BookingSlotDetailsContext.Consumer>
       {value => {
         const {activeDate, addBookingSlot, bookingList} = value
-        const stringDate = activeDate.toLocaleDateString('en-US', {dateStyle: 'full'})
+        const stringDate = format(activeDate, 'dd-MM-yyyy EEE')
 
         const onSubmitForm = event => {
           event.preventDefault()
@@ -64,10 +65,17 @@ function Form() {
         }
 
         const activeDateBookingList = bookingList.filter(each => each.date === stringDate)
-        bookTimeSlots = bookTimeSlots.filter(each => !activeDateBookingList.some(list => list.time === each ))
+        bookTimeSlots = bookTimeSlots.filter(each => {
+          const activeDateBookingListTime = activeDateBookingList.filter(list => list.time === each)
+          if (activeDateBookingListTime.length < 5) {
+            return true
+          }
+          return false
+        })
 
         if (bookTimeSlots.length === 0) {
-          toast.success('Slot is not available choose other day', {
+          redirect('/book-slot')
+          toast.error('Slot Time is not available choose other date', {
             position: "top-center",
             autoClose: 3000,
             hideProgressBar: false,
@@ -77,7 +85,6 @@ function Form() {
             progress: undefined,
             theme: "light",
             });
-          navigate('/book-slot')
         }
 
         return  (
@@ -89,13 +96,13 @@ function Form() {
                   <form className="user-details-form" onSubmit={onSubmitForm}>
                     <h1 className="user-details-heading">User Details</h1>
                     <label className="user-details-label" htmlFor="name">Name</label>
-                    <input required className="user-details-input form-control" id="name" type='text' value={name} onChange={onChangeName} placeholder="Name" />
+                    <input  className="user-details-input form-control" id="name" type='text' value={name} onChange={onChangeName} placeholder="Name" />
                     <label className="user-details-label" htmlFor="mobileNumber">Mobile number</label>
-                    <input required className="user-details-input form-control" id="mobileNumber" type='number' value={mobileNumber} onChange={onChangeMobileNumber} placeholder="Mobile Number" />
+                    <input  className="user-details-input form-control" id="mobileNumber" type='number' value={mobileNumber} onChange={onChangeMobileNumber} placeholder="Mobile Number" />
                     <label className="user-details-label" htmlFor="email">Email</label>
-                    <input required className="user-details-input form-control" id="email" type='email' value={email} onChange={onChangeEmail} placeholder="Email" />
+                    <input  className="user-details-input form-control" id="email" type='email' value={email} onChange={onChangeEmail} placeholder="Email" />
                     <label className="user-details-label" htmlFor="time">Slot Time</label>
-                    <select className="user-details-input form-control" onChange={onChangeTime}>
+                    <select required className="user-details-input form-control" onChange={onChangeTime}>
                       {bookTimeSlots.map(each => (
                         <option key={each} value={each}>{each}</option>
                       ))}

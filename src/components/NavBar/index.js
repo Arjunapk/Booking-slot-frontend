@@ -52,10 +52,10 @@ const NavBar = () => {
   return (
     <>
       <nav className='nav-bar'>
-        <div className='nav-logo-card'>
+        <Link to='/' className='nav-logo-card'>
           <img className='nav-bar-logo' src='https://res.cloudinary.com/dexzw88rk/image/upload/v1687688369/PicsArt_03-19-07.18.18_yru54j.png' alt='website logo' />
           <p className='nav-bar-website'>APK</p>
-        </div>
+        </Link>
         <button type='button' className='btn btn-outline menu-button' onClick={onClickMenu}>
           <GiHamburgerMenu />
         </button>

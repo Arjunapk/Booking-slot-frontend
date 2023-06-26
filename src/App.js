@@ -41,12 +41,18 @@ class App extends Component {
     this.setState(prevState => ({bookingList: [...prevState.bookingList, newBookingSlot]}), () => console.log(this.state.bookingList))
   }
 
+  removeBookingSlot = id => {
+    this.setState(prevState => ({
+      bookingList: prevState.bookingList.filter(each => each.id !== id)
+    }))
+  }
+
 
   render() {
     const {bookingList, activeDate} = this.state
 
     return (
-      <BookingSlotDetailsContext.Provider value={{bookingList, addBookingSlot: this.addBookingSlot, activeDate, onChangeActiveDate: this.onChangeActiveDate}}>
+      <BookingSlotDetailsContext.Provider value={{bookingList, addBookingSlot: this.addBookingSlot, removeBookingSlot: this.removeBookingSlot, activeDate, onChangeActiveDate: this.onChangeActiveDate}}>
         <Routes>
           <Route exact path='/' element={<Home />} />
           <Route exact path='/book-slot' element={<BookSlot />} />

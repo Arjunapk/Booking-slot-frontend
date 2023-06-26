@@ -9,6 +9,8 @@
 .nav-logo-card {
     display: flex;
     align-items: center;
+    text-decoration: none;
+    color: #262626;
 }
 
 .nav-bar-website {
@@ -58,7 +60,7 @@
     text-decoration: none;
 }
 
-.active {
+.nav-bar-link:hover {
     color: #1953ff;
 }
 

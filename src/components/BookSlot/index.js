@@ -3,11 +3,12 @@ import {useNavigate} from 'react-router-dom'
 import NavBar from '../NavBar'
 import Calendar from 'react-calendar';
 import {toast} from 'react-toastify'
+import add from 'date-fns/add'
 import './index.css'
 import 'react-calendar/dist/Calendar.css';
 import BookingSlotDetailsContext from '../../context/BookingSlotDetailsContext';
 
-const BookSlot = props => {
+const BookSlot = () => {
     const [date, onChangeActive] = useState(new Date())
     
     const navigate = useNavigate()
@@ -36,8 +37,7 @@ const BookSlot = props => {
               onChangeActiveDate(value)
               onClickDate()
             }
-          }
-  
+          }  
   
           return (
             <>
@@ -47,7 +47,7 @@ const BookSlot = props => {
                   <div className='col-12'>
                     <div className='book-slot-container'>
                       <h1 className='book-slot-heading'>Select Date and Book Slot</h1>
-                      <Calendar value={date} onChange={onChangeActive} minDate={new Date()} maxDate={new Date(2023, 7, 23)} onClickDay={onClickDay} />
+                      <Calendar value={date} onChange={onChangeActive} minDate={new Date()} maxDate={add(new Date(), {months:1})} onClickDay={onClickDay} />
                     </div>
                   </div>
                 </div>
