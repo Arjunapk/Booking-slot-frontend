@@ -96,11 +96,11 @@ function Form() {
                   <form className="user-details-form" onSubmit={onSubmitForm}>
                     <h1 className="user-details-heading">User Details</h1>
                     <label className="user-details-label" htmlFor="name">Name</label>
-                    <input  className="user-details-input form-control" id="name" type='text' value={name} onChange={onChangeName} placeholder="Name" />
+                    <input required  className="user-details-input form-control" id="name" type='text' value={name} onChange={onChangeName} placeholder="Name" />
                     <label className="user-details-label" htmlFor="mobileNumber">Mobile number</label>
-                    <input  className="user-details-input form-control" id="mobileNumber" type='number' value={mobileNumber} onChange={onChangeMobileNumber} placeholder="Mobile Number" />
+                    <input required  className="user-details-input form-control" id="mobileNumber" type='number' value={mobileNumber} onChange={onChangeMobileNumber} placeholder="Mobile Number" />
                     <label className="user-details-label" htmlFor="email">Email</label>
-                    <input  className="user-details-input form-control" id="email" type='email' value={email} onChange={onChangeEmail} placeholder="Email" />
+                    <input required  className="user-details-input form-control" id="email" type='email' value={email} onChange={onChangeEmail} placeholder="Email" />
                     <label className="user-details-label" htmlFor="time">Slot Time</label>
                     <select required className="user-details-input form-control" onChange={onChangeTime}>
                       {bookTimeSlots.map(each => (
