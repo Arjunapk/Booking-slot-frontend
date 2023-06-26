@@ -59,11 +59,11 @@
   }
 
 .history-serial-no {
-    width: 8%;
+    width: 6%;
 }
 
 .history-name {
-    width: 23%;
+    width: 20%;
 }
 
 .history-mobile-no {
@@ -83,6 +83,7 @@
 }
 
 .delete-btn {
+    width: 5%;
     margin: 0;
     padding: 0;
 }
