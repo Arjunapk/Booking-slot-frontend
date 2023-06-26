@@ -8,6 +8,7 @@ import BookSlotHistory from './components/BookSlotHistory';
 import BookingSlotDetailsContext from './context/BookingSlotDetailsContext'
 import './App.css';
 
+
 class App extends Component {
   state = {bookingList: [], activeDate: new Date()}
 
@@ -39,6 +40,7 @@ class App extends Component {
   addBookingSlot = newBookingSlot => {
     this.setState(prevState => ({bookingList: [...prevState.bookingList, newBookingSlot]}), () => console.log(this.state.bookingList))
   }
+
 
   render() {
     const {bookingList, activeDate} = this.state

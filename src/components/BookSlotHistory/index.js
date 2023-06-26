@@ -11,9 +11,28 @@ const BookSlotHistory = () => {
 
     const renderList = bookingList => (
         <ul className="booking-list-card">
-            {bookingList.map(each => (
-                <li key={each.id} className="booking-list-item">{each.name}</li>
-            ))}
+            <li className="booking-list-item">
+                <p className="history-serial-no fw-bold">S/N</p>
+                <p className="history-name fw-bold">Name</p>
+                <p className="history-mobile-no fw-bold">Mobile No.</p>
+                <p className="history-email fw-bold">Email</p>
+                <p className="history-date fw-bold">Date</p>
+                <p className="history-time fw-bold">Time</p>
+            </li>
+            {bookingList.map((each, index) => {
+                const {id, name, mobileNumber, email, date, time} = each
+
+                return (
+                    <li key={id} className="booking-list-item">
+                        <p className="history-serial-no">{index + 1}</p>
+                        <p className="history-name">{name}</p>
+                        <p className="history-mobile-no">{mobileNumber}</p>
+                        <p className="history-email">{email}</p>
+                        <p className="history-date">{date}</p>
+                        <p className="history-time">{time}</p>
+                    </li>
+                )
+            })}
         </ul>
     )
 
@@ -30,7 +49,7 @@ const BookSlotHistory = () => {
                         (<>
                             <img className="history-image" src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-saved-videos-img.png" alt="history" />
                             <p className="history-description">No slots are Booking</p>
-                            <button type="button" className="btn btn-pri" onClick={onClickBookSlot}>Book Slot</button>
+                            <button type="button" className="btn btn-primary align-self-center" onClick={onClickBookSlot}>Book Slot</button>
                             </>
                         )}
                     </div>

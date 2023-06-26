@@ -1,15 +1,17 @@
 .book-slot-history-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
     padding: 20px;
     min-height: 90vh;
+    width: 100%;
+    margin: auto;
 }
 
 .history-image {
     width: 30%;
     margin: 0 0 40px 0;
+    align-self: center;
 }
 
 .history-description {
@@ -18,4 +20,91 @@
     font-family: Roboto;
     color: #262626;
     margin: 0 0 15px 0;
+    align-self: center;
+    text-align: center;
+}
+
+.booking-list-card {
+    list-style: none;
+    padding: 0;
+    margin: 20px 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.booking-list-item {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+}
+
+.history-serial-no,
+.history-name,
+.history-mobile-no,
+.history-email,
+.history-date,
+.history-time {
+    font-family: Roboto;
+    font-size: 8px;
+    font-weight: 300;
+    color: #262626;
+    margin: 0;
+    flex-shrink: 0;
+    overflow: auto;
+}
+
+.history-email::-webkit-scrollbar,
+.history-mobile-no::-webkit-scrollbar,
+.history-name::-webkit-scrollbar{
+    display: none;
+  }
+
+.history-serial-no {
+    width: 8%;
+}
+
+.history-name {
+    width: 23%;
+}
+
+.history-mobile-no {
+    width: 15%;
+}
+
+.history-email {
+    width: 24%;
+}
+
+.history-date {
+    width: 20%;
+}
+
+.history-time {
+    width: 10%;
+}
+
+@media screen and (min-width: 568px) {
+    .history-serial-no,
+    .history-name,
+    .history-mobile-no,
+    .history-email,
+    .history-date,
+    .history-time {
+        font-size: 11px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .book-slot-history-container {
+        width: 70%;
+    }
+
+    .history-serial-no,
+    .history-name,
+    .history-mobile-no,
+    .history-email,
+    .history-date,
+    .history-time {
+        font-size: 14px;
+    }
 }

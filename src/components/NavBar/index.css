@@ -23,8 +23,23 @@
     width: 50px;
 }
 
-.nav-bar-link-card {
+.nav-bar-link-card-sm {
+    display: none;
+    align-items: center;
+    justify-content: space-evenly;
+    list-style: none;
+    padding: 10px 0;
+    margin: 0;
+    background-color: #e6eaf5;
+
+}
+
+.nav-bar-active {
     display: flex;
+}
+
+.nav-bar-link-card-lg {
+    display: none;
     align-items: center;
     list-style: none;
     padding: 0;
@@ -45,4 +60,18 @@
 
 .active {
     color: #1953ff;
+}
+
+@media screen and (min-width: 768px) {
+    .nav-bar-link-card-sm {
+        display: none;
+    }
+
+    .nav-bar-link-card-lg {
+        display: flex;
+    }
+
+    .menu-button {
+        display: none;
+    }
 }
